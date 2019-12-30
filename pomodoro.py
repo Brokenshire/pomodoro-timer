@@ -8,11 +8,11 @@ Version: 1.0
 
 # Standard import
 import time
+import winsound
 
 # Third-party imports
 import tkinter as tk
 import tkinter.messagebox
-from winsound import *
 
 
 class Application(tk.Frame):
@@ -22,7 +22,7 @@ class Application(tk.Frame):
         self.master = master
         self.running = False
         self.pomodoro = True
-        self.time = 15
+        self.time = 2
         self.mins = 0
         self.secs = 0
         self.build_interface()
@@ -52,10 +52,10 @@ class Application(tk.Frame):
         return "{:02d}:{:02d}".format(self.mins, self.secs)
 
     def timer(self):
-        """Calculates the time to be displayed"""
+        """Functionality behind timer"""
         if self.running is True:
             if self.time <= 0:
-                play = lambda: PlaySound("alert.wav", SND_FILENAME)
+                winsound.PlaySound("alert.wav", winsound.SND_FILENAME)
                 if self.pomodoro is True:
                     self.timer = 300
                     self.clock.configure(text="05:00")
