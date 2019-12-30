@@ -90,11 +90,9 @@ class Application(tk.Frame):
                 winsound.PlaySound("alert.wav", winsound.SND_FILENAME)
                 if self.pomodoro is True:
                     self.time = 300
-                    self.clock.configure(text="05:00")
                     self.pomodoro = False
                 else:
                     self.time = 1500
-                    self.clock.configure(text="25:00")
                     self.pomodoro = True
             self.clock.configure(text=self.calcualte())
             self.time -= 1
