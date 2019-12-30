@@ -22,7 +22,7 @@ class Application(tk.Frame):
         self.master = master
         self.running = False
         self.pomodoro = True
-        self.time = 2
+        self.time = 1500
         self.mins = 0
         self.secs = 0
         self.build_interface()
@@ -57,17 +57,16 @@ class Application(tk.Frame):
             if self.time <= 0:
                 winsound.PlaySound("alert.wav", winsound.SND_FILENAME)
                 if self.pomodoro is True:
-                    self.timer = 300
+                    self.time = 300
                     self.clock.configure(text="05:00")
                     self.pomodoro = False
                 else:
-                    self.timer = 1500
+                    self.time = 1500
                     self.clock.configure(text="25:00")
                     self.pomodoro = True
-            else:
-                self.clock.configure(text=self.calcualte())
-                self.time -= 1
-                self.after(1000, self.timer)
+            self.clock.configure(text=self.calcualte())
+            self.time -= 1
+            self.after(1000, self.timer)
 
     def start(self):
         """Begins the timer"""
