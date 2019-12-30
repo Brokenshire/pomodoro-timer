@@ -60,7 +60,7 @@ class Application(tk.Frame):
         self.clock = tk.Label(self, text="25:00", font=("Courier", 20), width=10)
         self.clock.grid(row=0, column=1, stick="S")
 
-        self.time_label = tk.Label(self, text="min sec", font=("Courier", 10), width=15)
+        self.time_label = tk.Label(self, text="min sec", font=("Courier", 10), width=10)
         self.time_label.grid(row=1, column=1, sticky="N")
 
         self.power_button = tk.Button(self, text="Start", command=lambda: self.start())
