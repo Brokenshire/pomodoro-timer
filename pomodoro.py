@@ -61,16 +61,16 @@ class Application(tk.Frame):
         self.master.bind("<Return>", lambda x: self.start())
 
     def calcualte(self):
-        """Calcualtes the current time
+        """Calcualtes the current time.
         
         Returns:
-
+            The current time in minuntes and seconds.
         """
         self.mins, self.secs = divmod(self.time, 60)
         return "{:02d}:{:02d}".format(self.mins, self.secs)
 
     def timer(self):
-        """Functionality behind timer"""
+        """Functionality behind pomodoro timer."""
         if self.running is True:
             if self.time <= 0:
                 winsound.PlaySound("alert.wav", winsound.SND_FILENAME)
@@ -87,20 +87,20 @@ class Application(tk.Frame):
             self.after(1000, self.timer)
 
     def start(self):
-        """Begins the timer"""
+        """Begins the pomodoro timer."""
         self.power_button.configure(text ="Stop", command=lambda: self.stop())
         self.master.bind("<Return>", lambda x: self.stop())
         self.running = True
         self.timer()
 
     def stop(self):
-        """Stops the timer"""
+        """Stops the pomodoro timer"""
         self.power_button.configure(text ="Start", command=lambda: self.start())
         self.master.bind("<Return>", lambda x: self.start())
         self.running = False
 
     def reset(self):
-        """Resets the timer to 25 mins."""
+        """Resets the pomodoro timer to 25 mins."""
         self.power_button.configure(text ="Start", command=lambda: self.start())
         self.master.bind("<Return>", lambda x: self.start())
         self.running = False
