@@ -16,68 +16,22 @@ import tkinter.messagebox
 
 
 class Application(tk.Frame):
-    """"
-    A class used to represent an Application
+    """"A class used to represent an Application
 
     Simple pomodoro timer application using tkinter.
 
     Attributes:
-    ----------
-    master: 
-        frame defenition
-    *args:
-        variable positional arguments
-    **kwargs:
-        variable keyword argurments
-    running: boolean
-        the state of the application
-    pomodoro: boolean
-        the state of the pomodoro timer
-    time: int
-        the whole time of the application
-    mins: int
-        the current minutes of the application
-    secs: int
-        the current seconds of the application
-
-    Methods:
-    ----------
-    build_interface()
-        Builds the GUI interface
-    calculate()
-        Calculates the current time
-    timer()
-        Manages running of the timer
-    start()
-        Starts the timer
-    stop()
-        Stops the timer
-    reset()
-        Resets the timer
-    quit()
-        Quits the program
+        master: Frame defenition.
+        *args: Variable positional arguments.
+        **kwargs: Variable keyword argurments.
+        running: A boolean indicating if application is running or not.
+        pomodoro: A boolean indicating if current stage is pomodoro or break.
+        time: An integer count of the timer.
+        mins: An integer count of the minutes.
+        secs: An integer count of the seconds.
     """
     def __init__(self, master, *args, **kwargs):
-        """
-        Paramaters
-        ----------
-        master: 
-            frame defenition
-        *args:
-            variable positional arguments
-        **kwargs:
-            variable keyword argurments
-        running: boolean
-            the state of the application
-        pomodoro: boolean
-            the state of the pomodoro timer
-        time: int
-            the whole time of the application
-        mins: int
-            the current minutes of the application
-        secs: int
-            the current seconds of the application
-        """
+        """Inits Application which contains master, *args, and **kwargs."""
         tk.Frame.__init__(self, master, *args, **kwargs)
         self.master = master
         self.running = False
@@ -107,7 +61,11 @@ class Application(tk.Frame):
         self.master.bind("<Return>", lambda x: self.start())
 
     def calcualte(self):
-        """Calcualtes the current time"""
+        """Calcualtes the current time
+        
+        Returns:
+
+        """
         self.mins, self.secs = divmod(self.time, 60)
         return "{:02d}:{:02d}".format(self.mins, self.secs)
 
