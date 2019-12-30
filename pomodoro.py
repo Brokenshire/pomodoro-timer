@@ -21,7 +21,7 @@ class Application(tk.Frame):
         tk.Frame.__init__(self, master, *args, **kwargs)
         self.master = master
         self.running = False
-        self.time = 1500
+        self.time = 15
         self.hours = 0
         self.mins = 0
         self.secs = 0
@@ -57,7 +57,7 @@ class Application(tk.Frame):
         """Calculates the time to be displayed"""
         if self.running == True:
             if self.time <= 0:
-                lambda: PlaySound('alert.wav', SND_FILENAME)
+                play = lambda: PlaySound("alert.wav", SND_FILENAME)
                 self.clock.configure(text="Time's up!")
             else:
                 self.clock.configure(text=self.calcualte())
