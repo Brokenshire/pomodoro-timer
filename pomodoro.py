@@ -12,10 +12,11 @@ import time
 # Third-party imports
 import tkinter as tk
 import tkinter.messagebox
+from winsound import *
 
 
 class Application(tk.Frame):
-    """"Simple timer application using tkinter."""
+    """"Simple pomodoro timer application using tkinter."""
     def __init__(self, master, *args, **kwargs):
         tk.Frame.__init__(self, master, *args, **kwargs)
         self.master = master
@@ -28,7 +29,7 @@ class Application(tk.Frame):
 
     def build_interface(self):
         """The interface function."""
-        self.clock = tk.Label(self, text="00:00:00", font=("Courier", 20), width=10)
+        self.clock = tk.Label(self, text="00:25:00", font=("Courier", 20), width=10)
         self.clock.grid(row=0, column=1, stick="S")
 
         self.time_label = tk.Label(self, text="hour min sec", font=("Courier", 10), width=15)
@@ -56,6 +57,7 @@ class Application(tk.Frame):
         """Calculates the time to be displayed"""
         if self.running == True:
             if self.time <= 0:
+                lambda: PlaySound('alert.wav', SND_FILENAME)
                 self.clock.configure(text="Time's up!")
             else:
                 self.clock.configure(text=self.calcualte())
@@ -76,7 +78,7 @@ class Application(tk.Frame):
         self.running = False
 
     def reset(self):
-        """Resets the timer to 0."""
+        """Resets the timer to 25 mins."""
         self.running = False
         self.time = 1500
         self.clock["text"] = "00:25:00"
@@ -90,6 +92,6 @@ class Application(tk.Frame):
 if __name__ == "__main__":
     """Main loop which creates program."""
     root = tk.Tk()
-    root.title("TIMER")
+    root.title("POMODORO TIMER")
     Application(root).pack(side="top", fill="both", expand=True)
     root.mainloop()
