@@ -21,7 +21,8 @@ class Application(tk.Frame):
         tk.Frame.__init__(self, master, *args, **kwargs)
         self.master = master
         self.running = False
-        self.time = 1500
+        self.pomodoro = True
+        self.time = 15
         self.mins = 0
         self.secs = 0
         self.build_interface()
@@ -52,11 +53,17 @@ class Application(tk.Frame):
 
     def timer(self):
         """Calculates the time to be displayed"""
-        if self.running == True:
+        if self.running is True:
             if self.time <= 0:
                 play = lambda: PlaySound("alert.wav", SND_FILENAME)
-                self.timer = 300
-                self.clock.configure(text="05:00")
+                if self.pomodoro is True:
+                    self.timer = 300
+                    self.clock.configure(text="05:00")
+                    self.pomodoro = False
+                else:
+                    self.timer = 1500
+                    self.clock.configure(text="25:00")
+                    self.pomodoro = True
             else:
                 self.clock.configure(text=self.calcualte())
                 self.time -= 1
