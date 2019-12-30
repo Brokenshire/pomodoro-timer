@@ -16,8 +16,68 @@ import tkinter.messagebox
 
 
 class Application(tk.Frame):
-    """"Simple pomodoro timer application using tkinter."""
+    """"
+    A class used to represent an Application
+
+    Simple pomodoro timer application using tkinter.
+
+    Attributes:
+    ----------
+    master: 
+        frame defenition
+    *args:
+        variable positional arguments
+    **kwargs:
+        variable keyword argurments
+    running: boolean
+        the state of the application
+    pomodoro: boolean
+        the state of the pomodoro timer
+    time: int
+        the whole time of the application
+    mins: int
+        the current minutes of the application
+    secs: int
+        the current seconds of the application
+
+    Methods:
+    ----------
+    build_interface()
+        Builds the GUI interface
+    calculate()
+        Calculates the current time
+    timer()
+        Manages running of the timer
+    start()
+        Starts the timer
+    stop()
+        Stops the timer
+    reset()
+        Resets the timer
+    quit()
+        Quits the program
+    """
     def __init__(self, master, *args, **kwargs):
+        """
+        Paramaters
+        ----------
+        master: 
+            frame defenition
+        *args:
+            variable positional arguments
+        **kwargs:
+            variable keyword argurments
+        running: boolean
+            the state of the application
+        pomodoro: boolean
+            the state of the pomodoro timer
+        time: int
+            the whole time of the application
+        mins: int
+            the current minutes of the application
+        secs: int
+            the current seconds of the application
+        """
         tk.Frame.__init__(self, master, *args, **kwargs)
         self.master = master
         self.running = False
@@ -28,7 +88,7 @@ class Application(tk.Frame):
         self.build_interface()
 
     def build_interface(self):
-        """The interface function."""
+        """Builds the interface for the application."""
         self.clock = tk.Label(self, text="25:00", font=("Courier", 20), width=10)
         self.clock.grid(row=0, column=1, stick="S")
 
@@ -47,7 +107,7 @@ class Application(tk.Frame):
         self.master.bind("<Return>", lambda x: self.start())
 
     def calcualte(self):
-        """Calcualtes the time"""
+        """Calcualtes the current time"""
         self.mins, self.secs = divmod(self.time, 60)
         return "{:02d}:{:02d}".format(self.mins, self.secs)
 
