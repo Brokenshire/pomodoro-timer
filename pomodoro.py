@@ -35,9 +35,9 @@ class Application(tk.Frame):
     Simple pomodoro timer application using tkinter.
 
     Attributes:
-        master: Frame defenition.
+        master: Frame definition.
         *args: Variable positional arguments.
-        **kwargs: Variable keyword argurments.
+        **kwargs: Variable keyword arguments.
         running: A boolean indicating if application is running or not.
         pomodoro: A boolean indicating if current stage is pomodoro or break.
         time: An integer count of the timer.
@@ -45,7 +45,7 @@ class Application(tk.Frame):
         secs: An integer count of the seconds.
     """
     def __init__(self, master, *args, **kwargs):
-        """Inits Application which contains master, *args, and **kwargs."""
+        """Init Application which contains master, *args, and **kwargs."""
         tk.Frame.__init__(self, master, *args, **kwargs)
         self.master = master
         self.running = False
@@ -74,7 +74,7 @@ class Application(tk.Frame):
 
         self.master.bind("<Return>", lambda x: self.start())
 
-    def calcualte(self):
+    def calculate(self):
         """Calcualtes the current time.
         
         Returns:
@@ -94,7 +94,7 @@ class Application(tk.Frame):
                 else:
                     self.time = 1500
                     self.pomodoro = True
-            self.clock.configure(text=self.calcualte())
+            self.clock.configure(text=self.calculate())
             self.time -= 1
             self.after(1000, self.timer)
 
