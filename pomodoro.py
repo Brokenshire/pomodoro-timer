@@ -75,10 +75,10 @@ class Application(tk.Frame):
         self.master.bind("<Return>", lambda x: self.start())
 
     def calculate(self):
-        """Calcualtes the current time.
+        """Calculates the current time.
         
         Returns:
-            The current time in minuntes and seconds.
+            The current time in minutes and seconds.
         """
         self.mins, self.secs = divmod(self.time, 60)
         return "{:02d}:{:02d}".format(self.mins, self.secs)
