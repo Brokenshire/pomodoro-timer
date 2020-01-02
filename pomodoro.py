@@ -100,20 +100,20 @@ class Application(tk.Frame):
 
     def start(self):
         """Begins the pomodoro timer."""
-        self.power_button.configure(text ="Stop", command=lambda: self.stop())
+        self.power_button.configure(text="Stop", command=lambda: self.stop())
         self.master.bind("<Return>", lambda x: self.stop())
         self.running = True
         self.timer()
 
     def stop(self):
         """Stops the pomodoro timer"""
-        self.power_button.configure(text ="Start", command=lambda: self.start())
+        self.power_button.configure(text="Start", command=lambda: self.start())
         self.master.bind("<Return>", lambda x: self.start())
         self.running = False
 
     def reset(self):
         """Resets the pomodoro timer to 25 mins."""
-        self.power_button.configure(text ="Start", command=lambda: self.start())
+        self.power_button.configure(text="Start", command=lambda: self.start())
         self.master.bind("<Return>", lambda x: self.start())
         self.running = False
         self.time = 1500
