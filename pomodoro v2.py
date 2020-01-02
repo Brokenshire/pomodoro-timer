@@ -14,26 +14,28 @@
 #
 # Author: Jack Brokenshire
 # Date: 30/12/2019
-# Version: 1.0
+# Version: 2.0
 
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
 # Standard import
-import time
 import winsound
 
 # Third-party imports
-import tkinter as tk
+import tkinter.ttk
+from tkinter.constants import *
 import tkinter.messagebox
 
 
-class Application(tk.Frame):
+class Application(tkinter.ttk.Frame):
     """"A class used to represent an Application
+
     Simple pomodoro timer application using tkinter.
+
     Attributes:
-        master: Frame definition.
+        root: Frame definition.
         *args: Variable positional arguments.
         **kwargs: Variable keyword arguments.
         running: A boolean indicating if application is running or not.
@@ -43,43 +45,59 @@ class Application(tk.Frame):
         secs: An integer count of the seconds.
     """
 
-    def __init__(self, master, *args, **kwargs):
-        """Init Application which contains master, *args, and **kwargs."""
-        tk.Frame.__init__(self, master, *args, **kwargs)
-        self.master = master
-        self.running = False
-        self.pomodoro = True
-        self.time = 1500
-        self.mins = 0
-        self.secs = 0
-        self.build_interface()
+    @classmethod
+    def main(cls):
+        tkinter.NoDefaultRoot()
+        root = tkinter.Tk()
+        root.title("POMODORO TIMER")
+        app = cls(root)
+        app.grid(sticky=NSEW)
+        root.grid_columnconfigure(0, weight=1)
+        root.grid_rowconfigure(0, weight=1)
+        root.resizable(True, True)
+        root.mainloop()
 
-    def build_interface(self):
-        """Builds the interface for the application."""
-        self.clock = tk.Label(self, text="25:00", font=("Courier", 20), width=10)
-        self.clock.grid(row=0, column=1, stick="S")
+    def __init__(self, root):
+        """Init Application which contains root, *args, and **kwargs."""
+        super().__init__(root)
+        self.create_variables()
+        self.create_widgets()
+        self.grid_widgets()
+        self.bind("<Return>", lambda x: self.start())
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=1)
 
-        self.time_label = tk.Label(self, text="min sec", font=("Courier", 10), width=10)
-        self.time_label.grid(row=1, column=1, sticky="N")
+    def create_variables(self):
+        self.running = tkinter.BooleanVar(self, False)
+        self.pomodoro = tkinter.BooleanVar(self, True)
+        self.time = tkinter.IntVar(self, 1500)
+        self.mins = tkinter.IntVar(self)
+        self.secs = tkinter.IntVar(self)
 
-        self.power_button = tk.Button(self, text="Start", command=lambda: self.start())
-        self.power_button.grid(row=2, column=0, sticky="NE")
+    def create_widgets(self):
+        """Creates the widgets of the application"""
+        self.clock = tkinter.Label(self, text="25:00", font=("Courier", 18), width=10)
+        self.time_label = tkinter.Label(self, text="min sec", font=("Courier", 10), width=10)
+        self.reset_button = tkinter.Button(self, text="Reset", command=lambda: self.reset())
+        self.power_button = tkinter.Button(self, text="Start", command=lambda: self.start())
+        self.quit_button = tkinter.Button(self, text="Quit", command=lambda: self.quit())
 
-        self.reset_button = tk.Button(self, text="Reset", command=lambda: self.reset())
-        self.reset_button.grid(row=2, column=1, sticky="NW")
-
-        self.quit_button = tk.Button(self, text="Quit", command=lambda: self.quit())
-        self.quit_button.grid(row=2, column=3, sticky="NE")
-
-        self.master.bind("<Return>", lambda x: self.start())
+    def grid_widgets(self):
+        """Grids the widgets of the application"""
+        options = dict(sticky=NSEW, padx=3, pady=4)
+        self.clock.grid(row=0, column=1, **options)
+        self.time_label.grid(row=1, column=1, **options)
+        self.reset_button.grid(row=2, column=0, **options)
+        self.power_button.grid(row=2, column=1, **options)
+        self.quit_button.grid(row=2, column=2, **options)
 
     def calculate(self):
         """Calculates the current time.
-
+        
         Returns:
             The current time in minutes and seconds.
         """
-        self.mins, self.secs = divmod(self.time, 60)
+        self.mins, self.secs = divmod(self.time.get(), 60)
         return "{:02d}:{:02d}".format(self.mins, self.secs)
 
     def timer(self):
@@ -88,45 +106,42 @@ class Application(tk.Frame):
             if self.time <= 0:
                 winsound.PlaySound("alert.wav", winsound.SND_FILENAME)
                 if self.pomodoro is True:
-                    self.time = 300
-                    self.pomodoro = False
+                    self.time.set(300)
+                    self.pomodoro.set(False)
                 else:
-                    self.time = 1500
-                    self.pomodoro = True
+                    self.time.set(1500)
+                    self.pomodoro.set(True)
             self.clock.configure(text=self.calculate())
-            self.time -= 1
+            self.time -= - 1
             self.after(1000, self.timer)
 
     def start(self):
         """Begins the pomodoro timer."""
         self.power_button.configure(text="Stop", command=lambda: self.stop())
-        self.master.bind("<Return>", lambda x: self.stop())
+        self.bind("<Return>", lambda x: self.stop())
         self.running = True
         self.timer()
 
     def stop(self):
         """Stops the pomodoro timer"""
         self.power_button.configure(text="Start", command=lambda: self.start())
-        self.master.bind("<Return>", lambda x: self.start())
+        self.bind("<Return>", lambda x: self.start())
         self.running = False
 
     def reset(self):
         """Resets the pomodoro timer to 25 mins."""
         self.power_button.configure(text="Start", command=lambda: self.start())
-        self.master.bind("<Return>", lambda x: self.start())
+        self.bind("<Return>", lambda x: self.start())
         self.running = False
         self.time = 1500
         self.clock["text"] = "25:00"
 
     def quit(self):
         """Ask user if they want to close program."""
-        if tk.messagebox.askokcancel("Quit", "Do you want to quit?"):
-            root.destroy()
+        if tkinter.messagebox.askokcancel("Quit", "Do you want to quit?"):
+            self.destroy()
 
 
 if __name__ == "__main__":
     """Main loop which creates program."""
-    root = tk.Tk()
-    root.title("POMODORO TIMER")
-    Application(root).pack(side="top", fill="both", expand=True)
-    root.mainloop()
+    Application.main()
