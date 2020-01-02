@@ -98,7 +98,7 @@ class Application(tkinter.ttk.Frame):
             The current time in minutes and seconds.
         """
         self.mins, self.secs = divmod(self.time.get(), 60)
-        return "{:02d}:{:02d}".format(self.mins, self.secs)
+        return "{:02d}:{:02d}".format(self.mins.get(), self.secs.get())
 
     def timer(self):
         """Functionality behind pomodoro timer."""
@@ -119,21 +119,21 @@ class Application(tkinter.ttk.Frame):
         """Begins the pomodoro timer."""
         self.power_button.configure(text="Stop", command=lambda: self.stop())
         self.bind("<Return>", lambda x: self.stop())
-        self.running = True
+        self.running.set(True)
         self.timer()
 
     def stop(self):
         """Stops the pomodoro timer"""
         self.power_button.configure(text="Start", command=lambda: self.start())
         self.bind("<Return>", lambda x: self.start())
-        self.running = False
+        self.running.set(False)
 
     def reset(self):
         """Resets the pomodoro timer to 25 mins."""
         self.power_button.configure(text="Start", command=lambda: self.start())
         self.bind("<Return>", lambda x: self.start())
-        self.running = False
-        self.time = 1500
+        self.running.set(False)
+        self.time.set(1500)
         self.clock["text"] = "25:00"
 
     def quit(self):
