@@ -1,2 +1,2 @@
-# python-pomodoro-timer
- Pomodoro timer application built using java for windows10.
+# pomodoro-timer
+Simple pomodoro timer tkinter application.
